@@ -58,16 +58,18 @@ class _CardWidgetState extends State<CardWidget> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ReusableText(
                   text: "Current Balance : \n ₹ ${widget.totalBalance}",
-                  fontSize: 20.sp,
+                  fontSize: 18.sp,
+                  letterSpace: 1.5,
                 ),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: darkBackground, width: 1.5),
+                    border: Border.all(color: border, width: 1.5),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -75,7 +77,10 @@ class _CardWidgetState extends State<CardWidget> {
                       vertical: 4.0.h,
                     ),
                     child: ReusableText(
-                        text: getCurrentMonthName(), fontSize: 14.sp),
+                      text: getCurrentMonthName(),
+                      fontSize: 15.sp,
+                      letterSpace: 1.2,
+                    ),
                   ),
                 ),
               ],
@@ -88,14 +93,16 @@ class _CardWidgetState extends State<CardWidget> {
                   children: [
                     ReusableText(
                       text: "Income: \n ₹ ${widget.income}",
-                      fontSize: 19.sp,
-                      color: lightGreenColor,
+                      fontSize: 18.sp,
+                      color: success,
+                      letterSpace: 1.5,
                     ),
                     SizedBox(height: 18.h),
                     ReusableText(
                       text: "Expense:\n ₹ ${widget.expanse}",
-                      fontSize: 19.sp,
-                      color: lightErrorColor,
+                      fontSize: 18.sp,
+                      color: error,
+                      letterSpace: 1.5,
                     ),
                   ],
                 ),
@@ -109,14 +116,14 @@ class _CardWidgetState extends State<CardWidget> {
                         centerSpaceRadius: 50,
                         sections: [
                           PieChartSectionData(
-                            color: lightGreenColor,
+                            color: success,
                             value: widget.income,
                             title: "Income",
                             showTitle: false,
                             radius: 50,
                           ),
                           PieChartSectionData(
-                            color: lightErrorColor,
+                            color: error,
                             value: widget.expanse,
                             title: "Expense",
                             showTitle: false,

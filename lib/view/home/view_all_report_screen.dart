@@ -4,7 +4,6 @@ import 'package:aether_wallet/models/get_all_report.dart';
 import 'package:aether_wallet/view/home/widget/transiction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 
 class ViewAllReportScreen extends StatefulWidget {
@@ -24,10 +23,10 @@ class _ViewAllReportScreenState extends State<ViewAllReportScreen> {
         centerTitle: true,
         title: ReusableText(
           text: "View all report",
-          fontSize: 18.sp,
-          color: lightTextColor,
+          fontSize: 22.sp,
+          color: headingText,
           fontWeight: FontWeight.bold,
-          letterSpace: 1.3,
+          letterSpace: 1.5,
         ),
         automaticallyImplyLeading: true,
         leading: Padding(
@@ -36,9 +35,12 @@ class _ViewAllReportScreenState extends State<ViewAllReportScreen> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(LineIcons.arrowLeft)),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: headingText,
+              )),
         ),
-        backgroundColor: lightAppBarColor,
+        backgroundColor: lightBackground,
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
@@ -47,12 +49,13 @@ class _ViewAllReportScreenState extends State<ViewAllReportScreen> {
               child: ReusableText(
                 text: "No report available",
                 fontSize: 20.sp,
-                color: lightTextColor,
+                color: headingText,
                 fontWeight: FontWeight.bold,
               ),
             )
           : Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14.0.w),
+              padding:
+                  EdgeInsets.only(left: 14.0.w, right: 14.0.w, top: 14.0.w),
               child: SizedBox(
                 height: double.infinity,
                 width: double.infinity,

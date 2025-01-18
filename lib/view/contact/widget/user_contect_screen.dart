@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/models/get_all_contacts.dart';
@@ -110,66 +111,62 @@ class _UserContectScreenState extends State<UserContectScreen> {
       }
     }
     return Scaffold(
-      backgroundColor: lightAppBarColor,
-      appBar: AppBar(
-        backgroundColor: lightAppBarColor,
-        leadingWidth: 76.w,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 20.w),
-          child: GestureDetector(
+      backgroundColor: lightBackground,
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 60.h),
+        child: AppBar(
+          backgroundColor: appBar,
+          leadingWidth: 76.w,
+          leading: Padding(
+            padding: EdgeInsets.only(left: 20.w),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(ContactDetailScreen(contact: widget.contact));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(150.r),
+                  border: Border.all(
+                    width: 1.3,
+                  ),
+                ),
+                child: Center(
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(widget.contact.userImage),
+                    radius: 27.r,
+                    backgroundColor: headingText,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          title: GestureDetector(
             onTap: () {
               Get.to(ContactDetailScreen(contact: widget.contact));
             },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(150.r),
-                border: Border.all(
-                  width: 1.3,
-                ),
-              ),
-              child: Center(
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(widget.contact.userImage),
-                  radius: 27.r,
-                  backgroundColor: lightTextColor,
-                ),
-              ),
-            ),
-          ),
-        ),
-        title: GestureDetector(
-          onTap: () {
-            Get.to(ContactDetailScreen(contact: widget.contact));
-          },
-          child: ReusableText(
-            text: widget.contact.name,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            letterSpace: 1.3,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 22.0.w),
             child: ReusableText(
-              text: widget.contact.amount.toString(),
+              text: widget.contact.name,
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
-              color: widget.contact.amount >= 0
-                  ? lightButtonColor
-                  : lightErrorColor,
+              letterSpace: 1.3,
             ),
-          )
-        ],
-      ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: lightBackground,
-                backgroundColor: lightTextColor,
+          ),
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 22.0.w),
+              child: ReusableText(
+                text: widget.contact.amount.toString(),
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: widget.contact.amount >= 0 ? success : error,
               ),
             )
+          ],
+        ),
+      ),
+      body: isLoading
+          ? LoadingScreen()
           : SizedBox.expand(
               child: Stack(
                 children: [
@@ -252,9 +249,8 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                                   0.75,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: isReceived
-                                                  ? lightButtonColor
-                                                  : lightErrorColor,
+                                              color:
+                                                  isReceived ? success : error,
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(12.r),
                                                 topRight: Radius.circular(12.r),
@@ -276,7 +272,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                                       '₹${transaction.amount}',
                                                   fontSize: 16.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  color: darkTextColor,
+                                                  color: headingText,
                                                 ),
                                                 SizedBox(height: 4.h),
                                                 // Transaction Time
@@ -324,7 +320,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                       child: ReusableText(
                                         text: "Add Transaction",
                                         fontSize: 18.sp,
-                                        color: lightTextColor,
+                                        color: headingText,
                                         fontWeight: FontWeight.bold,
                                         letterSpace: 1.3,
                                       ),
@@ -415,17 +411,17 @@ class _UserContectScreenState extends State<UserContectScreen> {
 
                                               // Close the dialog
                                               Get.back();
-                                            } catch (error) {
+                                            } catch (errorr) {
                                               setState(() {
                                                 isLoading = false;
                                               });
 
                                               String errorMessage =
                                                   "Something went wrong. Please try again.";
-                                              if (error is DioException &&
-                                                  error.response?.data !=
+                                              if (errorr is DioException &&
+                                                  errorr.response?.data !=
                                                       null) {
-                                                errorMessage = error.response
+                                                errorMessage = errorr.response
                                                         ?.data['message'] ??
                                                     errorMessage;
                                               }
@@ -436,9 +432,8 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                                 errorMessage,
                                                 snackPosition:
                                                     SnackPosition.TOP,
-                                                backgroundColor:
-                                                    lightErrorColor,
-                                                colorText: darkTextColor,
+                                                backgroundColor: error,
+                                                colorText: headingText,
                                               );
                                             }
                                             ;
@@ -446,7 +441,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                           child: ReusableText(
                                             text: "Save",
                                             fontSize: 17.sp,
-                                            color: lightButtonColor,
+                                            color: primaryButton,
                                           ))
                                     ],
                                   );
@@ -459,7 +454,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                     width: 150.w,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30.r),
-                                      color: lightButtonColor,
+                                      color: primaryButton,
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -467,7 +462,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                       children: [
                                         Icon(
                                           LineIcons.arrowUp,
-                                          color: darkTextColor,
+                                          color: headingText,
                                         ),
                                         SizedBox(
                                           width: 5.w,
@@ -475,7 +470,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                         ReusableText(
                                           text: "Received",
                                           fontSize: 18.sp,
-                                          color: darkTextColor,
+                                          color: headingText,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ],
@@ -496,7 +491,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                       child: ReusableText(
                                         text: "Add Transaction",
                                         fontSize: 18.sp,
-                                        color: lightTextColor,
+                                        color: headingText,
                                         fontWeight: FontWeight.bold,
                                         letterSpace: 1.3,
                                       ),
@@ -587,30 +582,29 @@ class _UserContectScreenState extends State<UserContectScreen> {
 
                                               // Close the dialog
                                               Get.back();
-                                            } catch (error) {
+                                            } catch (errorr) {
                                               setState(() {
                                                 isLoading = false;
                                               });
 
-                                              String errorMessage =
+                                              String errorrMessage =
                                                   "Something went wrong. Please try again.";
-                                              if (error is DioException &&
-                                                  error.response?.data !=
+                                              if (errorr is DioException &&
+                                                  errorr.response?.data !=
                                                       null) {
-                                                errorMessage = error.response
+                                                errorrMessage = errorr.response
                                                         ?.data['message'] ??
-                                                    errorMessage;
+                                                    errorrMessage;
                                               }
                                               debugPrint(
-                                                  'Error: $errorMessage');
+                                                  'Errorr: $errorrMessage');
                                               Get.snackbar(
-                                                "Error",
-                                                errorMessage,
+                                                "Errorr",
+                                                errorrMessage,
                                                 snackPosition:
                                                     SnackPosition.TOP,
-                                                backgroundColor:
-                                                    lightErrorColor,
-                                                colorText: darkTextColor,
+                                                backgroundColor: error,
+                                                colorText: headingText,
                                               );
                                             }
                                             ;
@@ -618,7 +612,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                           child: ReusableText(
                                             text: "Save",
                                             fontSize: 17.sp,
-                                            color: lightButtonColor,
+                                            color: primaryButton,
                                           ))
                                     ],
                                   );
@@ -631,7 +625,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                     width: 150.w,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30.r),
-                                      color: lightErrorColor,
+                                      color: error,
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -639,7 +633,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                       children: [
                                         Icon(
                                           LineIcons.arrowDown,
-                                          color: darkTextColor,
+                                          color: headingText,
                                         ),
                                         SizedBox(
                                           width: 5.w,
@@ -647,7 +641,7 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                         ReusableText(
                                           text: "Given",
                                           fontSize: 18.sp,
-                                          color: darkTextColor,
+                                          color: headingText,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ],

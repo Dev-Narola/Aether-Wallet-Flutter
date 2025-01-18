@@ -31,9 +31,9 @@ class DoubleContainer extends StatelessWidget {
               height: height - 10,
               width: width - 10,
               decoration: BoxDecoration(
-                color: darkBackground,
+                color: border,
                 borderRadius: BorderRadius.circular(4.r),
-                border: Border.all(color: darkBackground, width: 2.2),
+                border: Border.all(color: border, width: 2.2),
               ),
             ),
           ),
@@ -46,7 +46,7 @@ class DoubleContainer extends StatelessWidget {
               decoration: BoxDecoration(
                 color: backgroundColor ?? lightBackground,
                 borderRadius: BorderRadius.circular(4.r),
-                border: Border.all(color: darkBackground, width: 2.0),
+                border: Border.all(color: border, width: 2.0),
               ),
               child: child,
             ),

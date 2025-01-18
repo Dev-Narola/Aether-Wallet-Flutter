@@ -2,7 +2,6 @@
 
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -33,10 +32,10 @@ class ReusableText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: color ?? lightTextColor,
+        color: color ?? headingText,
         fontSize: fontSize ?? 16.sp,
         fontWeight: fontWeight ?? FontWeight.normal,
-        fontFamily: fontFamily ?? GoogleFonts.poppins().fontFamily,
+        fontFamily: fontFamily ?? 'Kingred',
         letterSpacing: letterSpace ?? 0,
         wordSpacing: wordSpace ?? 0,
       ),
@@ -69,11 +68,11 @@ class typeWriterAnimatedText extends StatelessWidget {
         TypewriterAnimatedText(
           text,
           textStyle: TextStyle(
-            color: color ?? lightTextColor,
-            fontSize: fontSize ?? 12.sp,
-            fontWeight: fontWeight ?? FontWeight.normal,
-            letterSpacing: letterSpace ?? 1,
-          ),
+              color: color ?? normalText,
+              fontSize: fontSize ?? 12.sp,
+              fontWeight: fontWeight ?? FontWeight.normal,
+              letterSpacing: letterSpace ?? 1,
+              fontFamily: 'Kingred'),
           speed: const Duration(milliseconds: 100),
         ),
       ],

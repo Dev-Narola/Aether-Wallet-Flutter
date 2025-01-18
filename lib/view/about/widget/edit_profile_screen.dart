@@ -16,7 +16,7 @@ class EditProfileScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           letterSpace: 1.3,
         ),
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         elevation: 0,
         scrolledUnderElevation: 0,
       ),

@@ -18,14 +18,23 @@ class AboutMe extends StatelessWidget {
     return Scaffold(
       backgroundColor: lightBackground,
       appBar: AppBar(
-        backgroundColor: lightAppBarColor,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: headingText,
+          ),
+        ),
+        backgroundColor: appBar,
         centerTitle: true,
         title: typeWriterAnimatedText(
           text: "About Me",
-          color: lightTextColor,
+          color: headingText,
           fontSize: 17.sp,
           fontWeight: FontWeight.bold,
-          letterSpace: 1.2,
+          letterSpace: 1.5,
         ),
       ),
       body: Padding(
@@ -37,9 +46,9 @@ class AboutMe extends StatelessWidget {
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                  color: lightCardColor,
+                  color: headingText,
                   borderRadius: BorderRadius.circular(120.r),
-                  border: Border.all(color: lightTextColor, width: 1.5.w),
+                  border: Border.all(color: headingText, width: 1.5.w),
                 ),
                 child: CircleAvatar(
                   radius: 110.r,
@@ -53,15 +62,16 @@ class AboutMe extends StatelessWidget {
             SizedBox(height: 20.h),
             typeWriterAnimatedText(
               text: userData['name'],
-              color: lightTextColor,
+              color: headingText,
               fontSize: 20.sp,
+              letterSpace: 1.4,
               fontWeight: FontWeight.bold,
             ),
             SizedBox(height: 10.h),
             Container(
               width: MediaQuery.of(context).size.width * 0.92,
               decoration: BoxDecoration(
-                border: Border.all(color: lightTextColor, width: 1.1.w),
+                border: Border.all(color: divider, width: 1.1.w),
                 borderRadius: BorderRadius.circular(10.r),
               ),
             ),
@@ -90,13 +100,13 @@ class AboutMe extends StatelessWidget {
                   children: [
                     ReusableText(
                       text: "Edit Profile",
-                      color: lightTextColor,
+                      color: headingText,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.normal,
                       wordSpace: 1.2,
                     ),
                     SizedBox(width: 10.w),
-                    Icon(LineIcons.editAlt, color: lightTextColor),
+                    Icon(LineIcons.editAlt, color: headingText),
                   ],
                 ),
               ),
@@ -123,8 +133,18 @@ class aboutMeDataWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ReusableText(text: prefixName, color: lightTextColor, fontSize: 17.sp),
-        ReusableText(text: suffixName, color: lightTextColor, fontSize: 17.sp),
+        ReusableText(
+          text: prefixName,
+          color: headingText,
+          fontSize: 17.sp,
+          letterSpace: 1.4,
+        ),
+        ReusableText(
+          text: suffixName,
+          color: headingText,
+          fontSize: 17.sp,
+          letterSpace: 1.4,
+        ),
       ],
     );
   }

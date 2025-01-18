@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/common/reusable_button.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
@@ -30,103 +31,97 @@ class _BalanceState extends State<Balance> {
     return Scaffold(
       backgroundColor: lightBackground,
       appBar: AppBar(
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         automaticallyImplyLeading: false,
       ),
-      body:
-          isLoading
-              ? Center(
-                child: const CircularProgressIndicator(
-                  backgroundColor: darkAppBarColor,
-                  color: darkTextColor,
-                ),
-              )
-              : Padding(
-                padding: EdgeInsets.symmetric(horizontal: 14.0.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ReusableText(
-                      text: "Enter your balance",
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ReusableText(
-                      text: "Enter your balance to get started",
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    SizedBox(height: 15.h),
-                    SpecialTextfield(
-                      text: "Balance",
-                      Icondata: LineIcons.wavyMoneyBill,
-                      controller: balanceController,
-                    ),
-                    SizedBox(height: 25.h),
-                    ReusableButton(
-                      text: "Sign up",
-                      icon: LineIcons.arrowCircleRight,
-                      onTap: () async {
-                        if (balanceController.text.isEmpty) {
-                          Get.snackbar(
-                            "Error",
-                            "Please enter balance",
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
-                            snackPosition: SnackPosition.TOP,
-                          );
-                        }
+      body: isLoading
+          ? LoadingScreen()
+          : Padding(
+              padding: EdgeInsets.symmetric(horizontal: 14.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ReusableText(
+                    text: "Enter your balance",
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  ReusableText(
+                    text: "Enter your balance to get started",
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  SizedBox(height: 15.h),
+                  SpecialTextfield(
+                    text: "Balance",
+                    Icondata: LineIcons.wavyMoneyBill,
+                    controller: balanceController,
+                  ),
+                  SizedBox(height: 25.h),
+                  ReusableButton(
+                    text: "Sign up",
+                    icon: LineIcons.arrowCircleRight,
+                    onTap: () async {
+                      if (balanceController.text.isEmpty) {
+                        Get.snackbar(
+                          "Error",
+                          "Please enter balance",
+                          backgroundColor: error,
+                          colorText: headingText,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                      }
 
-                        double balance = double.parse(balanceController.text);
+                      double balance = double.parse(balanceController.text);
 
-                        if (balance < 0) {
-                          Get.snackbar(
-                            "Error",
-                            "Balance must be more than 0",
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
-                            snackPosition: SnackPosition.TOP,
-                          );
-                        }
+                      if (balance < 0) {
+                        Get.snackbar(
+                          "Error",
+                          "Balance must be more than 0",
+                          backgroundColor: error,
+                          colorText: headingText,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                      }
 
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        String? token = prefs.getString("token");
-                        String finalToken = "bearer ${token}";
-                        print(finalToken);
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      String? token = prefs.getString("token");
+                      String finalToken = "bearer ${token}";
+                      print(finalToken);
 
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      final balanceModel = BalanceModel(balance: balance);
+
+                      restClient.addbalance(finalToken, balanceModel).then((
+                        response,
+                      ) {
                         setState(() {
-                          isLoading = true;
+                          isLoading = false;
                         });
 
-                        final balanceModel = BalanceModel(balance: balance);
+                        Get.snackbar(
+                          "Success",
+                          response.message,
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: success,
+                          colorText: headingText,
+                        );
 
-                        restClient.addbalance(finalToken, balanceModel).then((
-                          response,
-                        ) {
-                          setState(() {
-                            isLoading = false;
-                          });
-
-                          Get.snackbar(
-                            "Success",
-                            response.message,
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightGreenColor,
-                            colorText: darkTextColor,
-                          );
-
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ),
-                          );
-                        });
-                      },
-                    ),
-                  ],
-                ),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                ],
               ),
+            ),
     );
   }
 }

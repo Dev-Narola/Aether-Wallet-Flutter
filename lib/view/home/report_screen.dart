@@ -27,12 +27,12 @@ class _ReportScreenState extends State<ReportScreen> {
         title: ReusableText(
           text: "Report",
           fontSize: 20.sp,
-          color: lightTextColor,
+          color: headingText,
           fontWeight: FontWeight.bold,
           letterSpace: 1.3,
         ),
         centerTitle: true,
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: Padding(

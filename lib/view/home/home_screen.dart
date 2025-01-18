@@ -40,74 +40,83 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: lightBackground,
       body: SafeArea(
         child: CustomContainer(
-          containerContent: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.w),
+          containerContent: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HomeAppBar(
-                  userdata: widget.userData,
-                ),
-                SizedBox(height: 10.h),
-                CardWidget(
-                  totalBalance: widget.userBalance,
-                  expanse: widget.expanse,
-                  income: widget.income,
-                ),
-                SizedBox(height: 15.h),
-                Row(
-                  children: [
-                    ReusableText(
-                      text: "Recent Transactions",
-                      fontSize: 19.sp,
-                      fontWeight: FontWeight.bold,
-                      color: lightTextColor,
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(
-                            () => ViewAllReportScreen(reports: widget.reports));
-                      },
-                      child: ReusableText(
-                        text: "View All",
-                        fontSize: 15.sp,
-                        color: lightTextColor,
+                HomeAppBar(userdata: widget.userData),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.h),
+                      CardWidget(
+                        totalBalance: widget.userBalance,
+                        expanse: widget.expanse,
+                        income: widget.income,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                Expanded(
-                  child: widget.reports.isEmpty
-                      ? Center(
-                          child: ReusableText(
-                            text: "No report available",
-                            fontSize: 20.sp,
-                            color: lightTextColor,
+                      SizedBox(height: 15.h),
+                      Row(
+                        children: [
+                          ReusableText(
+                            text: "Recent Transactions",
+                            fontSize: 19.sp,
                             fontWeight: FontWeight.bold,
+                            letterSpace: 1.5,
+                            color: headingText,
                           ),
-                        )
-                      : ListView.builder(
-                          itemCount: widget.reports.length > 5
-                              ? 5
-                              : widget.reports.length,
-                          itemBuilder: (context, index) {
-                            final Report report = widget.reports[index];
-                            return Padding(
-                              padding: EdgeInsets.only(bottom: 12.0.h),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Get.to(
-                                        () => ReportScreen(
-                                              report: report,
-                                            ),
-                                        transition: Transition.fadeIn);
-                                  },
-                                  child: TransictionTile(report: report)),
-                            );
-                          },
-                        ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() =>
+                                  ViewAllReportScreen(reports: widget.reports));
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 8.0.w),
+                              child: ReusableText(
+                                text: "View All",
+                                letterSpace: 1.3,
+                                fontSize: 16.sp,
+                                color: normalText,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+                      widget.reports.isEmpty
+                          ? Center(
+                              child: ReusableText(
+                                text: "No report available",
+                                fontSize: 20.sp,
+                                color: headingText,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: widget.reports.length > 5
+                                  ? 5
+                                  : widget.reports.length,
+                              itemBuilder: (context, index) {
+                                final Report report = widget.reports[index];
+                                return Padding(
+                                  padding: EdgeInsets.only(bottom: 12.0.h),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(
+                                        () => ReportScreen(report: report),
+                                        transition: Transition.fadeIn,
+                                      );
+                                    },
+                                    child: TransictionTile(report: report),
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
+                  ),
                 ),
               ],
             ),

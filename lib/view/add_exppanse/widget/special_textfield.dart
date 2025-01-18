@@ -21,26 +21,31 @@ class SpecialTextfield extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 6.0.h),
       child: TextFormField(
         controller: controller,
+        style: TextStyle(
+            color: headingText, letterSpacing: 1.2, fontFamily: 'Kingred'),
         decoration: InputDecoration(
           hintText: text,
-          hintStyle: TextStyle(color: Colors.grey),
-
-          prefixIcon: Icon(Icondata),
+          hintStyle: TextStyle(
+              color: Colors.grey, letterSpacing: 1.2, fontFamily: 'Kingred'),
+          prefixIcon: Icon(
+            Icondata,
+            color: headingText,
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(color: lightTextColor),
+            borderSide: BorderSide(color: subtleText),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(color: lightErrorColor),
+            borderSide: BorderSide(color: error),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(color: lightErrorColor),
+            borderSide: BorderSide(color: error),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),

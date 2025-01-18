@@ -4,11 +4,10 @@ import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/view/about/about_me.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class HomeAppBar extends StatelessWidget {
+class HomeAppBar extends StatelessWidget implements PreferredSize {
   final Map<String, dynamic> userdata;
   const HomeAppBar({super.key, required this.userdata});
 
@@ -26,9 +25,9 @@ class HomeAppBar extends StatelessWidget {
     }
 
     return PreferredSize(
-      preferredSize: Size.fromHeight(100.h),
+      preferredSize: Size(double.infinity, 80.h),
       child: Container(
-        color: lightAppBarColor,
+        color: appBar,
         child: Padding(
           padding: EdgeInsets.only(top: 14.h, bottom: 6.h),
           child: Row(
@@ -45,24 +44,32 @@ class HomeAppBar extends StatelessWidget {
                           transition: Transition.fadeIn);
                     },
                     child: CircleAvatar(
-                      backgroundColor: lightTextColor,
+                      backgroundColor: normalText,
                       radius: 25.r,
                       backgroundImage: NetworkImage(userdata['user_image']),
                     ),
                   ),
-                  SizedBox(width: 10.w),
+                  SizedBox(width: 12.w),
                   ReusableText(
                     text: "${greeting()}, ${userdata['name']}",
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
+                    letterSpace: 1.5,
                   ),
                 ],
               ),
-              IconButton(onPressed: () {}, icon: Icon(LineIcons.barChartAlt)),
             ],
           ),
         ),
       ),
     );
   }
+
+  @override
+  // TODO: implement child
+  Widget get child => throw UnimplementedError();
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => throw UnimplementedError();
 }

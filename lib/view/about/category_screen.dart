@@ -1,6 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
+import 'package:aether_wallet/bottom_navigation_barr.dart';
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/models/categories_response.dart';
@@ -72,7 +74,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: ReusableText(
         text: "Income",
         fontSize: 16.sp,
-        color: lightTextColor,
+        color: headingText,
+        letterSpace: 1.3,
       ),
     ),
     DropdownMenuItem(
@@ -80,7 +83,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: ReusableText(
         text: "Expense",
         fontSize: 16.sp,
-        color: lightTextColor,
+        color: headingText,
+        letterSpace: 1.3,
       ),
     ),
   ];
@@ -103,16 +107,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       backgroundColor: lightBackground,
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: headingText,
+            )),
         centerTitle: true,
         title: ReusableText(
           text: "Manage category",
-          fontSize: 18.sp,
-          color: lightTextColor,
+          fontSize: 20.sp,
+          color: headingText,
           fontWeight: FontWeight.bold,
-          letterSpace: 1.3,
+          letterSpace: 1.5,
         ),
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         actions: [
           GestureDetector(
             onTap: () => showDialog(
@@ -126,7 +137,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  backgroundColor: lightAppBarColor,
+                  backgroundColor: appBar,
                   content: StatefulBuilder(
                     builder: (
                       BuildContext context,
@@ -165,7 +176,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.r),
                                 borderSide: BorderSide(
-                                  color: lightTextColor,
+                                  color: headingText,
                                 ),
                               ),
                             ),
@@ -176,7 +187,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           DottedBorder(
                             borderType: BorderType.RRect,
                             radius: Radius.circular(12.r),
-                            color: lightTextColor,
+                            color: headingText,
                             strokeWidth: 1,
                             child: SizedBox(
                               height: 50,
@@ -188,12 +199,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   ReusableText(
                                     text: "Attach Bill",
                                     fontSize: 15.sp,
-                                    color: lightTextColor,
+                                    color: headingText,
                                   ),
                                   SizedBox(width: 10.w),
                                   Icon(
                                     LineIcons.plusCircle,
-                                    color: lightTextColor,
+                                    color: headingText,
                                   ),
                                 ],
                               ),
@@ -246,7 +257,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       child: ReusableText(
                         text: "Cancel",
                         fontSize: 16.sp,
-                        color: lightTextColor,
+                        color: headingText,
                       ),
                     ),
                     TextButton(
@@ -277,11 +288,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             "Success",
                             response.message,
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightGreenColor,
-                            colorText: darkTextColor,
+                            backgroundColor: success,
+                            colorText: subtleText,
                           );
 
-                          Navigator.pop(context);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const BottomNavigationBarr(),
+                            ),
+                          );
                         }).catchError((error) {
                           setState(() {
                             isLoading = false;
@@ -298,32 +314,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             "Error",
                             errorMessage,
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: subtleText,
                           );
                         });
                       },
                       child: ReusableText(
                         text: "Save",
                         fontSize: 16.sp,
-                        color: lightTextColor,
+                        color: headingText,
                       ),
                     ),
                   ],
                 );
               },
             ),
-            child: Icon(LineIcons.plusCircle, size: 28.sp),
+            child: Padding(
+              padding: EdgeInsets.only(right: 18.0.w),
+              child:
+                  Icon(LineIcons.plusCircle, size: 30.sp, color: headingText),
+            ),
           ),
         ],
       ),
       body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                backgroundColor: lightBackground,
-                color: lightTextColor,
-              ),
-            )
+          ? LoadingScreen()
           : RefreshIndicator(
               onRefresh: getCategories,
               child: categoriesResponse != null &&
@@ -338,7 +353,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   : Center(
                       child: Text(
                         "No Categories Available",
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                        style: TextStyle(fontSize: 16, color: subtleText),
                       ),
                     ),
             ),

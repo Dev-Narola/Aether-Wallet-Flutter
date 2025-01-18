@@ -1,14 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, depend_on_referenced_packages
 
 import 'package:aether_wallet/bottom_navigation_barr.dart';
-import 'package:aether_wallet/common/reusable_text.dart';
-import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/view/auth/login_screen.dart';
 import 'package:aether_wallet/view/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,14 +14,31 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   bool? isLogin;
   bool? isSignup;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+    _initializeAnimation();
     _checkLoginStatus();
+  }
+
+  void _initializeAnimation() {
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 1, end: 1.2).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
+    _animationController.repeat(reverse: true);
   }
 
   Future<void> _checkLoginStatus() async {
@@ -55,22 +69,34 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryButtonColor,
+      backgroundColor: Color(0xFF072526), // #072526
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.account_circle, size: 100.sp, color: lightBackground),
-            SizedBox(height: 20.h),
-            typeWriterAnimatedText(
-              text: "Welcome to Aether wallet",
-              color: lightBackground,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ],
+        child: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _animation.value,
+              child: child,
+            );
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/Aether_Wallet.png",
+                width: 200,
+                height: 200,
+              ),
+            ],
+          ),
         ),
       ),
     );

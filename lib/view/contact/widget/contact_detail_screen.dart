@@ -1,5 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:aether_wallet/bottom_navigation_barr.dart';
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/common/reusable_button.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
@@ -25,16 +28,19 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
     return Scaffold(
       backgroundColor: lightBackground,
       appBar: AppBar(
-        backgroundColor: lightAppBarColor,
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: headingText,
+            )),
+        backgroundColor: appBar,
         elevation: 0,
       ),
       body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: lightBackground,
-                backgroundColor: lightTextColor,
-              ),
-            )
+          ? LoadingScreen()
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0.w),
               child: Column(
@@ -45,14 +51,14 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                         borderRadius: BorderRadius.circular(100.r)),
                     child: CircleAvatar(
                       radius: 75.r,
-                      backgroundColor: lightSecondaryTextColor,
+                      backgroundColor: headingText,
                       backgroundImage: NetworkImage(widget.contact.userImage),
                     ),
                   ),
                   SizedBox(height: 20.h),
                   Container(
                     decoration: BoxDecoration(
-                        border: Border.all(width: 1.6, color: lightTextColor),
+                        border: Border.all(width: 1.6, color: headingText),
                         borderRadius: BorderRadius.circular(10.r)),
                     child: Padding(
                       padding:
@@ -62,13 +68,13 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                         children: [
                           ReusableText(
                             text: "NAME : ",
-                            fontSize: 17.sp,
+                            fontSize: 16.sp,
                             letterSpace: 1.3,
                             fontWeight: FontWeight.bold,
                           ),
                           ReusableText(
                             text: widget.contact.name,
-                            fontSize: 17.sp,
+                            fontSize: 16.sp,
                             letterSpace: 1.3,
                             fontWeight: FontWeight.bold,
                           ),
@@ -79,7 +85,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                   SizedBox(height: 14.h),
                   Container(
                     decoration: BoxDecoration(
-                        border: Border.all(width: 1.6, color: lightTextColor),
+                        border: Border.all(width: 1.6, color: headingText),
                         borderRadius: BorderRadius.circular(10.r)),
                     child: Padding(
                       padding:
@@ -89,13 +95,13 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                         children: [
                           ReusableText(
                             text: "MOBILE NO. : ",
-                            fontSize: 17.sp,
+                            fontSize: 16.sp,
                             letterSpace: 1.3,
                             fontWeight: FontWeight.bold,
                           ),
                           ReusableText(
                             text: widget.contact.mobileNo,
-                            fontSize: 17.sp,
+                            fontSize: 16.sp,
                             letterSpace: 1.3,
                             fontWeight: FontWeight.bold,
                           ),
@@ -110,8 +116,8 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                       onTap: () {
                         Get.snackbar("Benchod",
                             "Loda pelethi harkhi details bharvani khabar nathi padti",
-                            colorText: darkTextColor,
-                            backgroundColor: lightTextColor);
+                            colorText: headingText,
+                            backgroundColor: headingText);
                       }),
                   SizedBox(height: 20.h),
                   ReusableButton(
@@ -137,8 +143,8 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                           Get.snackbar(
                             "Success",
                             response.message,
-                            backgroundColor: lightButtonColor,
-                            colorText: darkTextColor,
+                            backgroundColor: success,
+                            colorText: headingText,
                           );
 
                           Get.to(() => BottomNavigationBarr());

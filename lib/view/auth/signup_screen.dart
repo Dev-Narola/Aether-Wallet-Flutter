@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/common/reusable_button.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
@@ -35,12 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       backgroundColor: lightBackground,
       body: isLoading
-          ? Center(
-              child: const CircularProgressIndicator(
-                backgroundColor: darkAppBarColor,
-                color: darkTextColor,
-              ),
-            )
+          ? LoadingScreen()
           : SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 14.0.w),
@@ -118,8 +114,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Error",
                             "Please fill all the fields",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -129,8 +125,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Error",
                             "Invalid email address",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -140,8 +136,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Error",
                             "Mobile number must be at least 10 characters",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -151,8 +147,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Error",
                             "Password must be at least 6 characters",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -166,7 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           mobile_no: mobileController.text,
                           password: passwordController.text,
                           user_image:
-                              "https://img.freepik.com/premium-photo/memoji-handsome-guy-man-with-glasses-white-background-emoji-cartoon-character_826801-6961.jpg",
+                              "https://img.freepik.com/premium-photo/romantic-cartoonlike-3d-pixar-character-zhao-with-glasses_899449-139436.jpg",
                         );
                         restClient.signup(signupRequest).then((response) async {
                           setState(() {
@@ -177,8 +173,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Success",
                             response.message,
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightGreenColor,
-                            colorText: darkTextColor,
+                            backgroundColor: success,
+                            colorText: headingText,
                           );
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
@@ -210,8 +206,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Error",
                             errorMessage,
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                         });
                       },

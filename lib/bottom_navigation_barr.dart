@@ -1,12 +1,13 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/controller/report_controller.dart';
 import 'package:aether_wallet/models/categories_response.dart';
 import 'package:aether_wallet/models/get_all_report.dart';
-import 'package:aether_wallet/view/add_exppanse/add_expanse.dart';
 import 'package:aether_wallet/view/about/settings.dart';
+import 'package:aether_wallet/view/add_exppanse/add_expanse.dart';
 import 'package:aether_wallet/view/contact/contact_screen.dart';
 import 'package:aether_wallet/view/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +147,7 @@ class _BottomNavigationBarrState extends State<BottomNavigationBarr> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Scaffold(body: LoadingScreen());
     }
 
     if (userData == null) {
@@ -175,53 +176,61 @@ class _BottomNavigationBarrState extends State<BottomNavigationBarr> {
     ];
 
     return Scaffold(
-      body: Center(child: widgetOptions.elementAt(_selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: bottomNavigationbarColor,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        unselectedItemColor: const Color(0xFFA1A1A1),
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-            icon: Icon(LineIcons.home),
-            label: 'Home',
+        body: Center(child: widgetOptions.elementAt(_selectedIndex)),
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: bottomNavBar, // Dark teal background
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(LineIcons.barChartAlt),
-            label: 'Analytics',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: () {
-                Get.to(() => AddExpanse(
-                      categoryList: categories,
-                      currentBalance: userBalance,
-                    ));
-              },
-              child: CircleAvatar(
-                backgroundColor: primaryButtonColor,
-                radius: 25,
-                child: const Center(
-                  child: Icon(LineIcons.plus, color: lightAppBarColor),
-                ),
+          child: BottomNavigationBar(
+            backgroundColor: bottomNavBar, // Dark teal background
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            unselectedItemColor: inactiveNavItem, // Muted teal for inactive
+            selectedItemColor: primaryButton, // Bright teal for active
+            items: <BottomNavigationBarItem>[
+              const BottomNavigationBarItem(
+                icon: Icon(LineIcons.home),
+                label: 'Home',
               ),
-            ),
-            label: 'Add',
+              const BottomNavigationBarItem(
+                icon: Icon(LineIcons.barChartAlt),
+                label: 'Analytics',
+              ),
+              BottomNavigationBarItem(
+                icon: GestureDetector(
+                  onTap: () {
+                    Get.to(() => AddExpanse(
+                          categoryList: categories,
+                          currentBalance: userBalance,
+                        ));
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color:
+                          Color(0xFF14B8B8), // Bright teal for the plus button
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    child: const Icon(LineIcons.plus,
+                        color: Colors.white, size: 30),
+                  ),
+                ),
+                label: '',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(LineIcons.userCog),
+                label: 'Contact',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(LineIcons.cog),
+                label: 'Settings',
+              ),
+            ],
+            iconSize: 25,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(LineIcons.userCog),
-            label: 'Contact',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(LineIcons.cog),
-            label: 'Settings',
-          ),
-        ],
-        iconSize: 25,
-        currentIndex: _selectedIndex,
-        selectedItemColor: primaryButtonColor,
-        onTap: _onItemTapped,
-      ),
-    );
+        ));
   }
 }

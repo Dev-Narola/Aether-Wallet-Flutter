@@ -38,7 +38,7 @@ class _AddContactState extends State<AddContact> {
     return Scaffold(
       backgroundColor: lightBackground,
       appBar: AppBar(
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: GestureDetector(
@@ -47,6 +47,7 @@ class _AddContactState extends State<AddContact> {
           },
           child: Icon(
             LineIcons.arrowLeft,
+            color: headingText,
           ),
         ),
         title: ReusableText(
@@ -99,7 +100,7 @@ class _AddContactState extends State<AddContact> {
               DottedBorder(
                 borderType: BorderType.RRect,
                 radius: Radius.circular(12.r),
-                color: lightTextColor,
+                color: border,
                 strokeWidth: 1,
                 child: SizedBox(
                   height: 50,
@@ -111,10 +112,10 @@ class _AddContactState extends State<AddContact> {
                       ReusableText(
                         text: "User image",
                         fontSize: 15.sp,
-                        color: lightTextColor,
+                        color: headingText,
                       ),
                       SizedBox(width: 10.w),
-                      Icon(LineIcons.plusCircle, color: lightTextColor),
+                      Icon(LineIcons.plusCircle, color: headingText),
                     ],
                   ),
                 ),
@@ -123,7 +124,7 @@ class _AddContactState extends State<AddContact> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    border: Border.all(width: 0.8), color: lightTextColor),
+                    border: Border.all(width: 0.8), color: divider),
               ),
               SizedBox(height: 16.h),
               ReusableButton(
@@ -133,8 +134,7 @@ class _AddContactState extends State<AddContact> {
                     if (nameController.text.isEmpty ||
                         mobileController.text.isEmpty) {
                       Get.snackbar("Error", "Please fill all the details",
-                          colorText: darkTextColor,
-                          backgroundColor: lightErrorColor);
+                          colorText: headingText, backgroundColor: error);
                       return;
                     }
 
@@ -142,8 +142,7 @@ class _AddContactState extends State<AddContact> {
                         mobileController.text.isAlphabetOnly) {
                       Get.snackbar(
                           "Error", "Please enter mobile number properly",
-                          colorText: darkTextColor,
-                          backgroundColor: lightErrorColor);
+                          colorText: headingText, backgroundColor: error);
                       return;
                     }
 
@@ -167,8 +166,7 @@ class _AddContactState extends State<AddContact> {
                         .addContect(finalToken, addContact)
                         .then((response) {
                       Get.snackbar("Success", "Successfully added contect",
-                          colorText: darkTextColor,
-                          backgroundColor: lightGreenColor);
+                          colorText: headingText, backgroundColor: success);
                       Get.off(() => BottomNavigationBarr());
                     });
                   }),

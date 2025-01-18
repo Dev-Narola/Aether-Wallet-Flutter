@@ -10,7 +10,6 @@ import 'package:aether_wallet/models/add_report_request.dart';
 import 'package:aether_wallet/models/categories_response.dart';
 import 'package:aether_wallet/view/add_exppanse/widget/special_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -73,12 +72,12 @@ class _AddExpanseState extends State<AddExpanse> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: lightGreenColor,
-              onPrimary: lightTextColor,
-              onSurface: lightTextColor,
+              primary: primaryButton,
+              onPrimary: lightBackground,
+              onSurface: lightBackground,
             ),
             textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(foregroundColor: lightGreenColor),
+              style: TextButton.styleFrom(foregroundColor: primaryButton),
             ),
           ),
           child: child!,
@@ -100,7 +99,7 @@ class _AddExpanseState extends State<AddExpanse> {
       child: ReusableText(
         text: "Incom",
         fontSize: 16.sp,
-        color: lightTextColor,
+        color: headingText,
       ),
     ),
     DropdownMenuItem(
@@ -108,7 +107,7 @@ class _AddExpanseState extends State<AddExpanse> {
       child: ReusableText(
         text: "Expense",
         fontSize: 16.sp,
-        color: lightTextColor,
+        color: headingText,
       ),
     ),
   ];
@@ -132,15 +131,23 @@ class _AddExpanseState extends State<AddExpanse> {
     return Scaffold(
       backgroundColor: lightBackground,
       appBar: AppBar(
-        backgroundColor: lightAppBarColor,
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: headingText,
+            )),
+        centerTitle: true,
+        backgroundColor: appBar,
         automaticallyImplyLeading: true,
         title: ReusableText(
           text: "Add Expanse",
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,
-          color: lightTextColor,
-          fontFamily: GoogleFonts.montserrat().fontFamily,
-          letterSpace: 1.3,
+          color: headingText,
+          letterSpace: 1.5,
         ),
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -154,11 +161,10 @@ class _AddExpanseState extends State<AddExpanse> {
               SizedBox(height: 10.h),
               ReusableText(
                 text: "Title",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               SpecialTextfield(
                 Icondata: LineIcons.font,
@@ -167,11 +173,10 @@ class _AddExpanseState extends State<AddExpanse> {
               ),
               ReusableText(
                 text: "Merchant Name",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               SpecialTextfield(
                 Icondata: LineIcons.userAstronaut,
@@ -180,11 +185,10 @@ class _AddExpanseState extends State<AddExpanse> {
               ),
               ReusableText(
                 text: "Description",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               SpecialTextfield(
                 text: "Description",
@@ -193,11 +197,10 @@ class _AddExpanseState extends State<AddExpanse> {
               ),
               ReusableText(
                 text: "Date",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               GestureDetector(
                 onTap: () => _selectDate(context),
@@ -211,26 +214,32 @@ class _AddExpanseState extends State<AddExpanse> {
               ),
               ReusableText(
                 text: "Type",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               SizedBox(height: 8.h),
               DropdownButtonFormField(
                 onSaved: (newValue) {
                   _typeController.text = newValue.toString();
                 },
-                icon: Icon(LineIcons.angleDown, size: 22.sp),
+                icon: Icon(
+                  LineIcons.angleDown,
+                  size: 22.sp,
+                  color: headingText,
+                ),
                 hint: Row(
                   children: [
-                    Icon(LineIcons.alignCenter),
+                    Icon(
+                      LineIcons.alignCenter,
+                      color: headingText,
+                    ),
                     SizedBox(width: 10.w),
                     ReusableText(
                       text: "Type",
                       fontSize: 16.sp,
-                      color: lightSecondaryTextColor,
+                      color: headingText,
                     ),
                   ],
                 ),
@@ -242,7 +251,7 @@ class _AddExpanseState extends State<AddExpanse> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.r),
-                    borderSide: BorderSide(color: lightTextColor),
+                    borderSide: BorderSide(color: headingText),
                   ),
                 ),
                 items: _type,
@@ -256,30 +265,36 @@ class _AddExpanseState extends State<AddExpanse> {
               SizedBox(height: 8.h),
               ReusableText(
                 text: "Category",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               SizedBox(height: 8.h),
               DropdownButtonFormField(
                 // onSaved: (newValue) {
                 //   _categoryController.text = newValue.toString();
                 // },
-                icon: Icon(LineIcons.angleDown, size: 22.sp),
+                icon: Icon(
+                  LineIcons.angleDown,
+                  size: 22.sp,
+                  color: headingText,
+                ),
                 hint: Row(
                   children: [
-                    Icon(LineIcons.alignCenter),
+                    Icon(
+                      LineIcons.alignCenter,
+                      color: headingText,
+                    ),
                     SizedBox(width: 10.w),
                     ReusableText(
                       text: "Category",
                       fontSize: 16.sp,
-                      color: lightSecondaryTextColor,
+                      color: headingText,
                     ),
                   ],
                 ),
-                dropdownColor: lightBackground,
+                dropdownColor: subtleText,
 
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -288,7 +303,7 @@ class _AddExpanseState extends State<AddExpanse> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.r),
-                    borderSide: BorderSide(color: lightTextColor),
+                    borderSide: BorderSide(color: headingText),
                   ),
                 ),
                 items: filteredCategories.map((category) {
@@ -310,11 +325,10 @@ class _AddExpanseState extends State<AddExpanse> {
               SizedBox(height: 8.h),
               ReusableText(
                 text: "Amount",
-                fontSize: 17.sp,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: lightTextColor,
-                fontFamily: GoogleFonts.montserrat().fontFamily,
-                letterSpace: 1.1,
+                color: headingText,
+                letterSpace: 1.5,
               ),
               SpecialTextfield(
                 Icondata: LineIcons.wavyMoneyBill,
@@ -325,18 +339,17 @@ class _AddExpanseState extends State<AddExpanse> {
                 children: [
                   ReusableText(
                     text: "Attach Bill",
-                    fontSize: 17.sp,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
-                    color: lightTextColor,
-                    fontFamily: GoogleFonts.montserrat().fontFamily,
-                    letterSpace: 1.1,
+                    color: headingText,
+                    letterSpace: 1.5,
                   ),
                   SizedBox(width: 10.w),
                   Switch(
                     value: switchValue,
-                    activeColor: lightInputFieldColor,
-                    activeTrackColor: lightTextColor,
-                    inactiveThumbColor: darkSecondaryButtonColor,
+                    activeColor: inputBackground,
+                    activeTrackColor: headingText,
+                    inactiveThumbColor: placeholder,
                     inactiveTrackColor: lightBackground,
                     onChanged: (bool value) {
                       setState(() {
@@ -350,7 +363,7 @@ class _AddExpanseState extends State<AddExpanse> {
                 DottedBorder(
                   borderType: BorderType.RRect,
                   radius: Radius.circular(12.r),
-                  color: lightTextColor,
+                  color: headingText,
                   strokeWidth: 1,
                   child: SizedBox(
                     height: 50,
@@ -361,11 +374,12 @@ class _AddExpanseState extends State<AddExpanse> {
                       children: [
                         ReusableText(
                           text: "Attach Bill",
-                          fontSize: 15.sp,
-                          color: lightTextColor,
+                          fontSize: 20.sp,
+                          color: headingText,
+                          letterSpace: 1.5,
                         ),
                         SizedBox(width: 10.w),
-                        Icon(LineIcons.plusCircle, color: lightTextColor),
+                        Icon(LineIcons.plusCircle, color: headingText),
                       ],
                     ),
                   ),
@@ -396,8 +410,8 @@ class _AddExpanseState extends State<AddExpanse> {
                       Get.snackbar(
                         "Error",
                         "Please fill all the details",
-                        colorText: darkTextColor,
-                        backgroundColor: lightErrorColor,
+                        colorText: headingText,
+                        backgroundColor: error,
                       );
                       return;
                     }
@@ -406,8 +420,8 @@ class _AddExpanseState extends State<AddExpanse> {
                       Get.snackbar(
                         "Error",
                         "Amount value must be in number form",
-                        colorText: darkTextColor,
-                        backgroundColor: lightErrorColor,
+                        colorText: headingText,
+                        backgroundColor: error,
                       );
                       return;
                     }
@@ -418,8 +432,8 @@ class _AddExpanseState extends State<AddExpanse> {
                       Get.snackbar(
                         "Error",
                         "Please enter valid value of amount",
-                        colorText: darkTextColor,
-                        backgroundColor: lightErrorColor,
+                        colorText: headingText,
+                        backgroundColor: error,
                       );
                       return;
                     }
@@ -446,8 +460,9 @@ class _AddExpanseState extends State<AddExpanse> {
                       type: _typeController.text,
                       category: _categoryController.text,
                       amount: amount,
-                      billImage:
-                          "https://img.freepik.com/premium-vector/no-picture-available-vector-illustration-line-circuit_764382-201567.jpg",
+                      billImage: _typeController.text == 'Expense'
+                          ? 'https://img.freepik.com/premium-photo/bearish-stock-market-with-data-analysis-charting-generative-ai_753390-1850.jpg'
+                          : 'https://img.freepik.com/premium-photo/analyzing-science-stock-market-with-digital-charts-profit-generative-ai_753390-1663.jpg',
                     );
 
                     restClient
@@ -460,8 +475,8 @@ class _AddExpanseState extends State<AddExpanse> {
                       Get.snackbar(
                         "Success",
                         response.message,
-                        colorText: darkTextColor,
-                        backgroundColor: lightGreenColor,
+                        colorText: headingText,
+                        backgroundColor: success,
                       );
 
                       Navigator.of(context).push(
@@ -488,8 +503,8 @@ class _AddExpanseState extends State<AddExpanse> {
                         "Error",
                         errorMessage,
                         snackPosition: SnackPosition.TOP,
-                        backgroundColor: lightErrorColor,
-                        colorText: darkTextColor,
+                        backgroundColor: error,
+                        colorText: headingText,
                       );
                     });
                   },

@@ -1,6 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +18,6 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         title: 'Aether Wallet',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: lightTextColor),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
@@ -28,3 +26,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+/*
+
+1. check internet connection
+2. image upload
+3. update user/report/category
+4. add delete contact api with delete profile 
+5. pin checker
+6. analytics page
+7. set reminder feature
+8. download report feature
+9. add animation ( optional )
+
+*/

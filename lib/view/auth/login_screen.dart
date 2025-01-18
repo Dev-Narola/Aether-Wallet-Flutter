@@ -2,6 +2,7 @@
 
 import 'package:aether_wallet/bottom_navigation_barr.dart';
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:aether_wallet/common/loading_screen.dart';
 import 'package:aether_wallet/common/reusable_button.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
@@ -32,12 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: lightBackground,
       body: isLoading
-          ? Center(
-              child: const CircularProgressIndicator(
-                backgroundColor: darkAppBarColor,
-                color: darkTextColor,
-              ),
-            )
+          ? LoadingScreen()
           : SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 14),
@@ -101,8 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Error",
                             "Please fill all the fields",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -112,8 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Error",
                             "Invalid email address",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -123,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Error",
                             "Password must be at least 6 characters",
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightErrorColor,
-                            colorText: darkTextColor,
+                            backgroundColor: error,
+                            colorText: headingText,
                           );
                           return;
                         }
@@ -150,8 +146,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Success",
                             response.message,
                             snackPosition: SnackPosition.TOP,
-                            backgroundColor: lightGreenColor,
-                            colorText: darkTextColor,
+                            backgroundColor: success,
+                            colorText: headingText,
                           );
 
                           SharedPreferences prefs =

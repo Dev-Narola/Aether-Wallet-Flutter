@@ -28,13 +28,14 @@ class _AboutState extends State<About> {
       backgroundColor: lightBackground,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         centerTitle: true,
         title: ReusableText(
           text: "Settings",
-          color: lightTextColor,
-          fontSize: 17.sp,
+          color: headingText,
+          fontSize: 18.sp,
           fontWeight: FontWeight.bold,
+          letterSpace: 1.5,
         ),
       ),
       body: Padding(
@@ -76,8 +77,8 @@ class _AboutState extends State<About> {
                     "Success",
                     response.message,
                     snackPosition: SnackPosition.TOP,
-                    backgroundColor: lightGreenColor,
-                    colorText: darkTextColor,
+                    backgroundColor: success,
+                    colorText: headingText,
                   );
                   prefs.remove("token");
                   prefs.setBool("isLogin", false);
@@ -103,8 +104,8 @@ class _AboutState extends State<About> {
                     "Success",
                     response.message,
                     snackPosition: SnackPosition.TOP,
-                    backgroundColor: lightGreenColor,
-                    colorText: darkTextColor,
+                    backgroundColor: success,
+                    colorText: headingText,
                   );
                   prefs.remove("token");
                   prefs.setBool("isLogin", false);
@@ -140,10 +141,11 @@ class settingPageOptions extends StatelessWidget {
           child: Center(
             child: ReusableText(
               text: text,
-              color: lightTextColor,
+              color: headingText,
               fontSize: 16.sp,
               fontWeight: FontWeight.normal,
               wordSpace: 1.2,
+              letterSpace: 1.4,
             ),
           ),
         ),

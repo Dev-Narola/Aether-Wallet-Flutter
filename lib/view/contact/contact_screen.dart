@@ -65,14 +65,14 @@ class _ContactScreenState extends State<ContactScreen> {
       backgroundColor: lightBackground,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: lightAppBarColor,
+        backgroundColor: appBar,
         elevation: 0,
         scrolledUnderElevation: 0,
         title: ReusableText(
           text: "Contact Screen",
           fontSize: 18.sp,
           fontWeight: FontWeight.bold,
-          letterSpace: 1.3,
+          letterSpace: 1.5,
         ),
       ),
       body: RefreshIndicator(
@@ -94,11 +94,11 @@ class _ContactScreenState extends State<ContactScreen> {
                           height: 80,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: lightAppBarColor,
+                            color: lightBackground,
                             borderRadius: BorderRadius.circular(8.r),
                             border: Border.all(
                               width: 1.5,
-                              color: lightTextColor,
+                              color: headingText,
                             ),
                           ),
                           child: Padding(
@@ -108,7 +108,7 @@ class _ContactScreenState extends State<ContactScreen> {
                               children: [
                                 CircleAvatar(
                                   radius: 28.r,
-                                  backgroundColor: lightSecondaryTextColor,
+                                  backgroundColor: subtleText,
                                   backgroundImage:
                                       NetworkImage(contact.userImage),
                                 ),
@@ -119,13 +119,13 @@ class _ContactScreenState extends State<ContactScreen> {
                                   children: [
                                     ReusableText(
                                       text: contact.name,
-                                      fontSize: 18.sp,
+                                      fontSize: 17.sp,
                                       fontWeight: FontWeight.bold,
                                       letterSpace: 1.3,
                                     ),
                                     ReusableText(
                                       text: contact.mobileNo,
-                                      fontSize: 15.sp,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.normal,
                                       letterSpace: 1.3,
                                     ),
@@ -137,9 +137,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
                                   letterSpace: 1.5,
-                                  color: contact.amount >= 0
-                                      ? lightButtonColor
-                                      : lightErrorColor,
+                                  color: contact.amount >= 0 ? success : error,
                                 )
                               ],
                             ),
@@ -163,7 +161,7 @@ class _ContactScreenState extends State<ContactScreen> {
         onPressed: () {
           Get.to(() => AddContact());
         },
-        backgroundColor: primaryButtonColor,
+        backgroundColor: primaryButton,
         shape: CircleBorder(),
         child: Icon(
           LineIcons.userPlus,

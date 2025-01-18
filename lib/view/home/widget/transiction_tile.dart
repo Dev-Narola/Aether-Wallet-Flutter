@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:aether_wallet/common/double_container.dart';
+import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/models/get_all_report.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,7 @@ class TransictionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color amountColor =
-        report.reportType == "Expense" ? Colors.red : lightGreenColor;
+    Color amountColor = report.reportType == "Expense" ? Colors.red : success;
     return DoubleContainer(
       height: 90.h,
       width: 334.w,
@@ -31,22 +31,23 @@ class TransictionTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  report.title,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                ReusableText(
+                  text: report.title,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w600,
+                  letterSpace: 1.5,
                 ),
                 SizedBox(height: 2.h),
-                Text(
-                  report.categories.name,
-                  style: TextStyle(fontSize: 13.sp, color: lightTextColor),
+                ReusableText(
+                  text: report.categories.name,
+                  fontSize: 13.sp,
+                  letterSpace: 1.5,
                 ),
                 SizedBox(height: 2.h),
-                Text(
-                  "Date : ${report.date}",
-                  style: TextStyle(fontSize: 13.sp, color: lightTextColor),
+                ReusableText(
+                  text: "Date : ${report.date}",
+                  fontSize: 13.sp,
+                  letterSpace: 1.5,
                 ),
               ],
             ),
@@ -54,14 +55,13 @@ class TransictionTile extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "₹ ${report.amount}",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: amountColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                ReusableText(
+                  text: "₹ ${report.amount}",
+                  fontSize: 17.sp,
+                  color: amountColor,
+                  fontWeight: FontWeight.bold,
+                  letterSpace: 1.5,
+                )
               ],
             ),
             SizedBox(width: 12.w),
