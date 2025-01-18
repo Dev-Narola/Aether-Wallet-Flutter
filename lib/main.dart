@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:ui_web';
+
 import 'package:aether_wallet/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,6 +32,8 @@ class MyApp extends StatelessWidget {
 
 /*
 
+ Tasks to Complete
+
 1. check internet connection
 2. image upload
 3. update user/report/category
@@ -41,3 +45,9 @@ class MyApp extends StatelessWidget {
 9. add animation ( optional )
 
 */
+
+
+// To run 
+// 1. check ip
+// 2. change current ip in restclient code at base url
+// 3. run application
