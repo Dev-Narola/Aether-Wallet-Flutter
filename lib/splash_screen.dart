@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, depend_on_referenced_packages
 
-import 'package:aether_wallet/bottom_navigation_barr.dart';
+import 'package:aether_wallet/pin_screen.dart';
 import 'package:aether_wallet/view/auth/login_screen.dart';
 import 'package:aether_wallet/view/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   bool? isLogin;
   bool? isSignup;
+  bool? isPin;
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -45,17 +46,28 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLogin = prefs.getBool("isLogin") ?? false;
     isSignup = prefs.getBool("isSignup") ?? false;
+    isPin = prefs.getString('pin')?.isNotEmpty ?? false;
     _navigateToNextScreen();
   }
 
   Future<void> _navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 3));
-    if (isLogin == true && isSignup == true) {
+    if (!mounted) return;
+
+    if (isLogin == true && isSignup == true && isPin == true) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const BottomNavigationBarr()),
+        MaterialPageRoute(builder: (context) => const PinScreen()),
       );
-    } else if (isSignup == true && isLogin == false) {
+    }
+    // Uncomment and update the `SetPinScreen` if necessary
+    // else if (isLogin == true && isSignup == true && isPin == false) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const SetPinScreen()),
+    //   );
+    // }
+    else if (isSignup == true && isLogin == false) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),

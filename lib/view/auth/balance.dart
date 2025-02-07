@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unnecessary_brace_in_string_interps, use_build_context_synchronously
 
 import 'package:aether_wallet/client/injection_container.dart';
 import 'package:aether_wallet/common/loading_screen.dart';
@@ -88,7 +88,7 @@ class _BalanceState extends State<Balance> {
                           await SharedPreferences.getInstance();
                       String? token = prefs.getString("token");
                       String finalToken = "bearer ${token}";
-                      print(finalToken);
+                      debugPrint(finalToken);
 
                       setState(() {
                         isLoading = true;

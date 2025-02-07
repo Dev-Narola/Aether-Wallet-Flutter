@@ -1,4 +1,7 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:aether_wallet/client/injection_container.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BalanceController {
@@ -21,7 +24,7 @@ class BalanceController {
     restClient.updatebalance(finalToken, {
       "balance": currentBalance,
     }).then((response) {
-      print(
+      debugPrint(
           "update balance response ----------------------> ${response.message}");
     });
   }

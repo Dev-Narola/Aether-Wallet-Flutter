@@ -143,109 +143,111 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       BuildContext context,
                       StateSetter setDialogState,
                     ) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 8.h),
-                          ReusableText(text: "Title", fontSize: 16.sp),
-                          SizedBox(height: 5.h),
-                          SpecialTextfield(
-                            text: "Title",
-                            Icondata: LineIcons.sellcast,
-                            controller: _titleController,
-                          ),
-                          SizedBox(height: 10.h),
-                          ReusableText(text: "Type", fontSize: 16.sp),
-                          SizedBox(height: 5.h),
-                          DropdownButtonFormField(
-                            value: null,
-                            onChanged: (value) {
-                              setDialogState(() {
-                                _typeController.text = value.toString();
-                              });
-                            },
-                            items: _type,
-                            icon: Icon(LineIcons.angleDown, size: 22.sp),
-                            dropdownColor: lightBackground,
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  color: headingText,
+                      return SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8.h),
+                            ReusableText(text: "Title", fontSize: 16.sp),
+                            SizedBox(height: 5.h),
+                            SpecialTextfield(
+                              text: "Title",
+                              Icondata: LineIcons.sellcast,
+                              controller: _titleController,
+                            ),
+                            SizedBox(height: 10.h),
+                            ReusableText(text: "Type", fontSize: 16.sp),
+                            SizedBox(height: 5.h),
+                            DropdownButtonFormField(
+                              value: null,
+                              onChanged: (value) {
+                                setDialogState(() {
+                                  _typeController.text = value.toString();
+                                });
+                              },
+                              items: _type,
+                              icon: Icon(LineIcons.angleDown, size: 22.sp),
+                              dropdownColor: lightBackground,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  borderSide: BorderSide(
+                                    color: headingText,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 10.h),
-                          ReusableText(text: "Image", fontSize: 16.sp),
-                          SizedBox(height: 8.h),
-                          DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(12.r),
-                            color: headingText,
-                            strokeWidth: 1,
-                            child: SizedBox(
-                              height: 50,
-                              width: double.infinity,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ReusableText(
-                                    text: "Attach Bill",
-                                    fontSize: 15.sp,
-                                    color: headingText,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Icon(
-                                    LineIcons.plusCircle,
-                                    color: headingText,
-                                  ),
-                                ],
+                            SizedBox(height: 10.h),
+                            ReusableText(text: "Image", fontSize: 16.sp),
+                            SizedBox(height: 8.h),
+                            DottedBorder(
+                              borderType: BorderType.RRect,
+                              radius: Radius.circular(12.r),
+                              color: headingText,
+                              strokeWidth: 1,
+                              child: SizedBox(
+                                height: 50,
+                                width: double.infinity,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ReusableText(
+                                      text: "Attach Bill",
+                                      fontSize: 15.sp,
+                                      color: headingText,
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Icon(
+                                      LineIcons.plusCircle,
+                                      color: headingText,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 10.h),
-                          ReusableText(
-                            text: "Select Color",
-                            fontSize: 16.sp,
-                          ),
-                          SizedBox(height: 8.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: _availableColors.map((color) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setDialogState(() {
-                                    _selectedColor = color;
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 4.0.w,
-                                  ),
-                                  width: 30.w,
-                                  height: 30.w,
-                                  decoration: BoxDecoration(
-                                    color: color,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: _selectedColor == color
-                                          ? darkBackground
-                                          : Colors.transparent,
-                                      width: 2.0,
+                            SizedBox(height: 10.h),
+                            ReusableText(
+                              text: "Select Color",
+                              fontSize: 16.sp,
+                            ),
+                            SizedBox(height: 8.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: _availableColors.map((color) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setDialogState(() {
+                                      _selectedColor = color;
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 4.0.w,
+                                    ),
+                                    width: 30.w,
+                                    height: 30.w,
+                                    decoration: BoxDecoration(
+                                      color: color,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: _selectedColor == color
+                                            ? darkBackground
+                                            : Colors.transparent,
+                                        width: 2.0,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ],
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),

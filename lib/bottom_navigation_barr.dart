@@ -23,108 +23,175 @@ class BottomNavigationBarr extends StatefulWidget {
 }
 
 class _BottomNavigationBarrState extends State<BottomNavigationBarr> {
+  // bool isLoading = true;
+  // int _selectedIndex = 0;
+  // Map<String, dynamic>? userData;
+  // double? userBalance;
+  // List<Category>? categories;
+  // late ReportController reportController;
+  // List<Report> reports = [];
+
+  // double currentMonthExpanse = 0;
+  // double currentMonthIncome = 0;
+
+  // Future<void> fetchUserData() async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String? token = prefs.getString("token");
+  //     if (token != null) {
+  //       String finalToken = "Bearer $token";
+  //       var response = await restClient.getUser(finalToken);
+  //       setState(() {
+  //         userData = response.toJson();
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       debugPrint("Token not found");
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error fetching user data: $e");
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+
+  // Future<void> fetchBalance() async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String? token = prefs.getString("token");
+  //     if (token != null) {
+  //       String finalToken = "Bearer $token";
+  //       var response = await restClient.getBalance(finalToken);
+  //       setState(() {
+  //         userBalance = response.balance;
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       debugPrint("Token not found");
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error fetching balance: $e");
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+
+  // Future<void> fetchCategories() async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String? token = prefs.getString("token");
+  //     if (token != null) {
+  //       String finalToken = "Bearer $token";
+  //       restClient.getCategories(finalToken).then((response) {
+  //         setState(() {
+  //           categories = response.categories;
+  //           isLoading = false;
+  //         });
+  //       });
+  //     } else {
+  //       debugPrint("Token not found");
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error fetching categories: $e");
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+
+  // Future<void> fetchReports() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? token = prefs.getString("token");
+
+  //   if (token != null) {
+  //     await reportController.getReports("Bearer $token");
+  //     setState(() {
+  //       reports = reportController.reports;
+  //       reportController.calculateMonthlyTotals(
+  //           DateTime.now().month.toString(), reports);
+  //       currentMonthExpanse = reportController.currenMonthExpanse;
+  //       currentMonthIncome = reportController.currenMonthIncome;
+  //     });
+  //   } else {
+  //     debugPrint("Token not found");
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   reportController = Get.put(ReportController(restClient));
+  //   fetchUserData();
+  //   fetchBalance();
+  //   fetchCategories();
+  //   fetchReports();
+  // }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   bool isLoading = true;
   int _selectedIndex = 0;
   Map<String, dynamic>? userData;
   double? userBalance;
-  List<Category>? categories;
-  late ReportController reportController;
+  List<Category> categories = [];
   List<Report> reports = [];
 
   double currentMonthExpanse = 0;
   double currentMonthIncome = 0;
+  late ReportController reportController;
 
-  Future<void> fetchUserData() async {
+  Future<void> loadData() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("token");
-      if (token != null) {
-        String finalToken = "Bearer $token";
-        var response = await restClient.getUser(finalToken);
-        setState(() {
-          userData = response.toJson();
-          isLoading = false;
-        });
-      } else {
+
+      if (token == null) {
         debugPrint("Token not found");
-        setState(() {
-          isLoading = false;
-        });
+        return;
       }
-    } catch (e) {
-      debugPrint("Error fetching user data: $e");
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
 
-  Future<void> fetchBalance() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString("token");
-      if (token != null) {
-        String finalToken = "Bearer $token";
-        var response = await restClient.getBalance(finalToken);
-        setState(() {
-          userBalance = response.balance;
-          isLoading = false;
-        });
-      } else {
-        debugPrint("Token not found");
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      debugPrint("Error fetching balance: $e");
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+      String finalToken = "Bearer $token";
 
-  Future<void> fetchCategories() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString("token");
-      if (token != null) {
-        String finalToken = "Bearer $token";
-        restClient.getCategories(finalToken).then((response) {
-          setState(() {
-            categories = response.categories;
-            isLoading = false;
-          });
-        });
-      } else {
-        debugPrint("Token not found");
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      debugPrint("Error fetching categories: $e");
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+      // ✅ Await each API call
+      var userResponse = await restClient.getUser(finalToken);
+      var balanceResponse = await restClient.getBalance(finalToken);
+      var categoryResponse = await restClient.getCategories(finalToken);
+      await reportController.getReports(finalToken);
 
-  Future<void> fetchReports() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("token");
-
-    if (token != null) {
-      await reportController.getReports("Bearer $token");
       setState(() {
-        reports = reportController.reports;
+        userData = userResponse.toJson(); // ✅ Now safe to call toJson()
+        userBalance = balanceResponse.balance;
+        categories = categoryResponse.categories;
+        reports = reportController.reports.reversed.toList();
+
         reportController.calculateMonthlyTotals(
-            DateTime.now().month.toString(), reports);
+          DateTime.now().month.toString(),
+          reports,
+        );
         currentMonthExpanse = reportController.currenMonthExpanse;
         currentMonthIncome = reportController.currenMonthIncome;
+        isLoading = false;
       });
-    } else {
-      debugPrint("Token not found");
+    } catch (e) {
+      debugPrint("Error loading data: $e");
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -132,16 +199,7 @@ class _BottomNavigationBarrState extends State<BottomNavigationBarr> {
   void initState() {
     super.initState();
     reportController = Get.put(ReportController(restClient));
-    fetchUserData();
-    fetchBalance();
-    fetchCategories();
-    fetchReports();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    loadData();
   }
 
   @override
@@ -168,6 +226,7 @@ class _BottomNavigationBarrState extends State<BottomNavigationBarr> {
         reports: reports.reversed.toList(),
         expanse: currentMonthExpanse,
         income: currentMonthIncome,
+        categories: categories,
       ),
       const Text('Analytics Page'),
       const Text('Search Page'),

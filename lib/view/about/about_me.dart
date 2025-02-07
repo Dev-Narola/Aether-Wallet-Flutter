@@ -43,22 +43,36 @@ class AboutMe extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 20.h),
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
+            Stack(children: [
+              Positioned(
+                bottom: 5,
+                right: 5,
+                child: Container(
+                  height: 20,
+                  width: 20,
                   color: headingText,
-                  borderRadius: BorderRadius.circular(120.r),
-                  border: Border.all(color: headingText, width: 1.5.w),
-                ),
-                child: CircleAvatar(
-                  radius: 110.r,
-                  backgroundColor: lightBackground,
-                  backgroundImage: NetworkImage(
-                    userData['user_image'],
+                  child: Center(
+                    child: Icon(LineIcons.camera),
                   ),
                 ),
               ),
-            ),
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: headingText,
+                    borderRadius: BorderRadius.circular(120.r),
+                    border: Border.all(color: headingText, width: 1.5.w),
+                  ),
+                  child: CircleAvatar(
+                    radius: 110.r,
+                    backgroundColor: lightBackground,
+                    backgroundImage: NetworkImage(
+                      userData['user_image'],
+                    ),
+                  ),
+                ),
+              ),
+            ]),
             SizedBox(height: 20.h),
             typeWriterAnimatedText(
               text: userData['name'],
@@ -88,7 +102,10 @@ class AboutMe extends StatelessWidget {
             SizedBox(height: 40.h),
             GestureDetector(
               onTap: () {
-                Get.to(() => EditProfileScreen(),
+                Get.to(
+                    () => EditProfileScreen(
+                          userData: userData,
+                        ),
                     transition: Transition.fadeIn);
               },
               child: DoubleContainer(

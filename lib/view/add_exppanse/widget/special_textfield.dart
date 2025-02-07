@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, depend_on_referenced_packages, non_constant_identifier_names
 
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ class SpecialTextfield extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 6.0.h),
       child: TextFormField(
         controller: controller,
+        cursorColor: headingText,
         style: TextStyle(
             color: headingText, letterSpacing: 1.2, fontFamily: 'Kingred'),
         decoration: InputDecoration(

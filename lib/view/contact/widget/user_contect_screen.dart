@@ -58,9 +58,9 @@ class _UserContectScreenState extends State<UserContectScreen> {
               "Hi ${widget.contact.name}, just to keep you informed, I owe you ₹${widget.contact.amount}. I’ll make sure to clear it soon. Thanks for your patience!"); // levana
 
       if (result == SmsStatus.sent) {
-        print("=================> SMS Sent successfully");
+        debugPrint("=================> SMS Sent successfully");
       } else {
-        print("=================> Failed");
+        debugPrint("=================> Failed");
       }
     } else {
       SmsStatus result = await BackgroundSms.sendMessage(
@@ -69,9 +69,9 @@ class _UserContectScreenState extends State<UserContectScreen> {
               "Hi ${widget.contact.name}, the balance between us is now cleared. Thank you for your cooperation. Let’s stay connected!"); // devana
 
       if (result == SmsStatus.sent) {
-        print("=================> SMS Sent successfully");
+        debugPrint("=================> SMS Sent successfully");
       } else {
-        print("=================> Failed");
+        debugPrint("=================> Failed");
       }
     }
   }
@@ -436,7 +436,6 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                                 colorText: headingText,
                                               );
                                             }
-                                            ;
                                           },
                                           child: ReusableText(
                                             text: "Save",
@@ -607,7 +606,6 @@ class _UserContectScreenState extends State<UserContectScreen> {
                                                 colorText: headingText,
                                               );
                                             }
-                                            ;
                                           },
                                           child: ReusableText(
                                             text: "Save",

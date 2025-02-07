@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously, prefer_typing_uninitialized_variables
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously, prefer_typing_uninitialized_variables, unused_field
 
 import 'package:aether_wallet/bottom_navigation_barr.dart';
 import 'package:aether_wallet/client/injection_container.dart';
@@ -6,6 +6,7 @@ import 'package:aether_wallet/common/reusable_button.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/controller/balance_controller.dart';
+import 'package:aether_wallet/controller/image_controller.dart';
 import 'package:aether_wallet/models/add_report_request.dart';
 import 'package:aether_wallet/models/categories_response.dart';
 import 'package:aether_wallet/view/add_exppanse/widget/special_textfield.dart';
@@ -16,6 +17,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddExpanse extends StatefulWidget {
   final categoryList;
@@ -28,7 +30,10 @@ class AddExpanse extends StatefulWidget {
 }
 
 class _AddExpanseState extends State<AddExpanse> {
+  final ImageController _imageController = Get.put(ImageController());
+
   bool isLoading = false;
+  bool imageUploading = false;
   late List<Category> categories;
   late List<Category> filteredCategories; // Add filtered categories list
   late BalanceController balanceController;
@@ -50,6 +55,7 @@ class _AddExpanseState extends State<AddExpanse> {
     _descriptionController.dispose();
     _categoryController.dispose();
     _typeController.dispose();
+    _billImageController.dispose();
   }
 
   final TextEditingController _dateController = TextEditingController();
@@ -59,7 +65,7 @@ class _AddExpanseState extends State<AddExpanse> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
-  // final TextEditingController _imageController = TextEditingController();
+  final TextEditingController _billImageController = TextEditingController();
 
   bool switchValue = false;
   Future<void> _selectDate(BuildContext context) async {
@@ -319,7 +325,7 @@ class _AddExpanseState extends State<AddExpanse> {
                   });
                 },
                 onSaved: (newValue) {
-                  print("======================> $newValue");
+                  debugPrint("======================> $newValue");
                 },
               ),
               SizedBox(height: 8.h),
@@ -360,29 +366,105 @@ class _AddExpanseState extends State<AddExpanse> {
                 ],
               ),
               if (switchValue)
-                DottedBorder(
-                  borderType: BorderType.RRect,
-                  radius: Radius.circular(12.r),
-                  color: headingText,
-                  strokeWidth: 1,
-                  child: SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ReusableText(
-                          text: "Attach Bill",
-                          fontSize: 20.sp,
-                          color: headingText,
-                          letterSpace: 1.5,
-                        ),
-                        SizedBox(width: 10.w),
-                        Icon(LineIcons.plusCircle, color: headingText),
-                      ],
-                    ),
-                  ),
+                GetBuilder<ImageController>(
+                  builder: (controller) {
+                    return GestureDetector(
+                      onTap: () async {
+                        setState(() {
+                          imageUploading = true;
+                        });
+
+                        try {
+                          // Select Image from Gallery
+                          await controller.selectImage(ImageSource.gallery);
+
+                          if (controller.selectedImage != null) {
+                            // Upload to Cloudinary
+                            await controller.uploadImageToCloudinary();
+                          }
+
+                          // Ensure Image URL is Set
+                          String? uploadedImageUrl = controller.imageUrl;
+
+                          _billImageController.text = uploadedImageUrl!;
+
+                          debugPrint(
+                              "Final Image URL in _billImageController: ${_billImageController.text}");
+
+                          Get.snackbar(
+                            "Success",
+                            "Image uploaded successfully",
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                          );
+                        } catch (error) {
+                          debugPrint(
+                              "Error during image upload: ${error.toString()}");
+                          Get.snackbar(
+                            "Error",
+                            error.toString(),
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                          );
+                        } finally {
+                          setState(() {
+                            imageUploading = false;
+                          });
+                        }
+                      },
+                      child: imageUploading
+                          ? Container(
+                              height: 150,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: lightBackground,
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: headingText,
+                                ),
+                              ),
+                            )
+                          : _billImageController.text.isEmpty
+                              ? DottedBorder(
+                                  borderType: BorderType.RRect,
+                                  radius: Radius.circular(12.r),
+                                  color: headingText,
+                                  strokeWidth: 1,
+                                  child: SizedBox(
+                                    height: 150,
+                                    width: double.infinity,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(LineIcons.plusCircle,
+                                              color: headingText, size: 30),
+                                          SizedBox(height: 10.h),
+                                          ReusableText(
+                                            text: "Attach Bill",
+                                            fontSize: 20.sp,
+                                            color: headingText,
+                                            letterSpace: 1.5,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  child: Image.network(
+                                    _billImageController.text,
+                                    height: 150,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                    );
+                  },
                 ),
               SizedBox(height: 20.h),
               GestureDetector(
@@ -460,18 +542,17 @@ class _AddExpanseState extends State<AddExpanse> {
                       type: _typeController.text,
                       category: _categoryController.text,
                       amount: amount,
-                      billImage: _typeController.text == 'Expense'
-                          ? 'https://img.freepik.com/premium-photo/bearish-stock-market-with-data-analysis-charting-generative-ai_753390-1850.jpg'
-                          : 'https://img.freepik.com/premium-photo/analyzing-science-stock-market-with-digital-charts-profit-generative-ai_753390-1663.jpg',
+                      billImage: _billImageController.text.isEmpty
+                          ? 'https://as2.ftcdn.net/v2/jpg/09/66/81/65/1000_F_966816564_hcfsJsf7EjKOs5gFfIx8ihMrs5I7fNfP.jpg'
+                          : _billImageController.text,
                     );
-
                     restClient
                         .addReport(finalToken, addReport)
                         .then((response) {
                       setState(() {
                         isLoading = false;
                       });
-                      print(response);
+                      debugPrint(response.toString());
                       Get.snackbar(
                         "Success",
                         response.message,
@@ -479,10 +560,11 @@ class _AddExpanseState extends State<AddExpanse> {
                         backgroundColor: success,
                       );
 
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const BottomNavigationBarr(),
                         ),
+                        (Route<dynamic> route) => false,
                       );
                     }).catchError((error) {
                       setState(() {

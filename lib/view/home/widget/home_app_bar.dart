@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSize {
+class HomeAppBar extends StatelessWidget {
   final Map<String, dynamic> userdata;
   const HomeAppBar({super.key, required this.userdata});
 
@@ -29,7 +29,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSize {
       child: Container(
         color: appBar,
         child: Padding(
-          padding: EdgeInsets.only(top: 14.h, bottom: 6.h),
+          padding: EdgeInsets.only(top: 14.h, bottom: 6.h, left: 14.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -64,12 +64,4 @@ class HomeAppBar extends StatelessWidget implements PreferredSize {
       ),
     );
   }
-
-  @override
-  // TODO: implement child
-  Widget get child => throw UnimplementedError();
-
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => throw UnimplementedError();
 }

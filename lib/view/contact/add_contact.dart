@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:aether_wallet/bottom_navigation_barr.dart';
 import 'package:aether_wallet/client/injection_container.dart';
 import 'package:aether_wallet/common/reusable_button.dart';

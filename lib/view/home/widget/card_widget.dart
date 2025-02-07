@@ -111,27 +111,29 @@ class _CardWidgetState extends State<CardWidget> {
                   child: SizedBox(
                     width: 100.w,
                     height: 100.h,
-                    child: PieChart(
-                      PieChartData(
-                        centerSpaceRadius: 50,
-                        sections: [
-                          PieChartSectionData(
-                            color: success,
-                            value: widget.income,
-                            title: "Income",
-                            showTitle: false,
-                            radius: 50,
+                    child: (widget.income == 0.0 && widget.expanse == 0.0)
+                        ? ReusableText(text: "No Expanse in this month")
+                        : PieChart(
+                            PieChartData(
+                              centerSpaceRadius: 50,
+                              sections: [
+                                PieChartSectionData(
+                                  color: success,
+                                  value: widget.income,
+                                  title: "Income",
+                                  showTitle: false,
+                                  radius: 50,
+                                ),
+                                PieChartSectionData(
+                                  color: error,
+                                  value: widget.expanse,
+                                  title: "Expense",
+                                  showTitle: false,
+                                  radius: 50,
+                                ),
+                              ],
+                            ),
                           ),
-                          PieChartSectionData(
-                            color: error,
-                            value: widget.expanse,
-                            title: "Expense",
-                            showTitle: false,
-                            radius: 50,
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ],

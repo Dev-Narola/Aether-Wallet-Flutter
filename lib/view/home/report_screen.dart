@@ -1,18 +1,23 @@
 // ignore_for_file: must_be_immutable, depend_on_referenced_packages
 
+import 'package:aether_wallet/bottom_navigation_barr.dart';
+import 'package:aether_wallet/client/injection_container.dart';
 import 'package:aether_wallet/common/reusable_button.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/models/get_all_report.dart';
+import 'package:aether_wallet/view/home/widget/update_report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportScreen extends StatefulWidget {
+  final categories;
   Report report;
-  ReportScreen({super.key, required this.report});
+  ReportScreen({super.key, required this.report, required this.categories});
 
   @override
   State<ReportScreen> createState() => _ReportScreenState();
@@ -41,7 +46,10 @@ class _ReportScreenState extends State<ReportScreen> {
               onTap: () {
                 Get.back();
               },
-              child: Icon(LineIcons.arrowLeft)),
+              child: Icon(
+                LineIcons.arrowLeft,
+                color: headingText,
+              )),
         ),
       ),
       body: Padding(
@@ -185,10 +193,34 @@ class _ReportScreenState extends State<ReportScreen> {
             ReusableButton(
                 text: "Update Report",
                 icon: LineIcons.arrowCircleRight,
-                onTap: () {}),
+                onTap: () {
+                  Get.to(() => UpdateReport(
+                        report: widget.report,
+                        categories: widget.categories,
+                      ));
+                }),
             SizedBox(height: 14.h),
             ReusableButton(
-                text: "Delete Report", icon: LineIcons.trash, onTap: () {})
+              text: "Delete Report",
+              icon: LineIcons.trash,
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                String? token = await prefs.getString("token");
+                String finalToken = "Bearer $token";
+
+                restClient
+                    .deleteReport(finalToken, widget.report.id)
+                    .then((response) {
+                  Get.snackbar(
+                    "Success",
+                    "Report deleted successfully",
+                    backgroundColor: success,
+                    colorText: headingText,
+                  );
+                  Get.to(() => BottomNavigationBarr());
+                });
+              },
+            )
           ],
         ),
       ),

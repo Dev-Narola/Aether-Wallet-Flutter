@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, depend_on_referenced_packages
 
 import 'package:aether_wallet/common/double_container.dart';
 import 'package:aether_wallet/common/reusable_text.dart';

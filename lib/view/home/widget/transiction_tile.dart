@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 
 import 'package:aether_wallet/common/double_container.dart';
 import 'package:aether_wallet/common/reusable_text.dart';
@@ -14,6 +14,9 @@ class TransictionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color amountColor = report.reportType == "Expense" ? Colors.red : success;
+    String imageUrll = report.reportType == "Expense"
+        ? 'https://img.freepik.com/premium-photo/bearish-stock-market-with-data-analysis-charting-generative-ai_753390-1850.jpg'
+        : 'https://img.freepik.com/premium-photo/analyzing-science-stock-market-with-digital-charts-profit-generative-ai_753390-1663.jpg';
     return DoubleContainer(
       height: 90.h,
       width: 334.w,
@@ -24,7 +27,7 @@ class TransictionTile extends StatelessWidget {
             CircleAvatar(
               radius: 30,
               backgroundColor: Colors.grey,
-              backgroundImage: NetworkImage(report.billImage),
+              backgroundImage: NetworkImage(imageUrll),
             ),
             SizedBox(width: 12.w),
             Column(
@@ -71,3 +74,7 @@ class TransictionTile extends StatelessWidget {
     );
   }
 }
+
+                      // _typeController.text == 'Expense'
+                      //     ? 'https://img.freepik.com/premium-photo/bearish-stock-market-with-data-analysis-charting-generative-ai_753390-1850.jpg'
+                      //     : 'https://img.freepik.com/premium-photo/analyzing-science-stock-market-with-digital-charts-profit-generative-ai_753390-1663.jpg',

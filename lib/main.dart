@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
+        // home: SetPinScreen(),
       ),
     );
   }
@@ -36,11 +37,12 @@ class MyApp extends StatelessWidget {
 2. image upload
 3. update user/report/category
 4. add delete contact api with delete profile 
-5. pin checker
+5. pin checker  -  done
 6. analytics page
 7. set reminder feature
 8. download report feature
 9. add animation ( optional )
+10. Google Login
 
 */
 

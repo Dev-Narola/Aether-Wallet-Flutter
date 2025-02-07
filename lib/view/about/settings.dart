@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, camel_case_types, depend_on_referenced_packages
+// ignore_for_file: must_be_immutable, camel_case_types, depend_on_referenced_packages, use_build_context_synchronously
 
 import 'package:aether_wallet/client/injection_container.dart';
 import 'package:aether_wallet/common/double_container.dart';

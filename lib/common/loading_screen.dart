@@ -1,9 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  const LoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

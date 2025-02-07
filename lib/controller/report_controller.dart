@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables
+
 import 'package:aether_wallet/client/rest_client.dart';
 import 'package:aether_wallet/models/get_all_report.dart';
 import 'package:get/get.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
 import 'package:aether_wallet/client/injection_container.dart';
 import 'package:aether_wallet/common/loading_screen.dart';
@@ -7,8 +7,8 @@ import 'package:aether_wallet/common/reusable_text.dart';
 import 'package:aether_wallet/constant/constant.dart';
 import 'package:aether_wallet/models/signup_request.dart';
 import 'package:aether_wallet/view/add_exppanse/widget/special_textfield.dart';
-import 'package:aether_wallet/view/auth/balance.dart';
 import 'package:aether_wallet/view/auth/login_screen.dart';
+import 'package:aether_wallet/view/auth/set_pin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_icons/line_icons.dart';
@@ -103,8 +103,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       ],
                     ),
                     ReusableButton(
-                      text: "Add balance",
-                      icon: LineIcons.arrowCircleRight,
+                      text: "Signup",
+                      icon: LineIcons.userTie,
                       onTap: () {
                         if (nameController.text.isEmpty ||
                             emailController.text.isEmpty ||
@@ -183,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const Balance(),
+                              builder: (context) => const SetPinScreen(),
                             ),
                           );
                         }).catchError((error) {
@@ -192,7 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           });
                           String errorMessage =
                               "Something went wrong. Please try again.";
-                          if (error is DioError) {
+                          if (error is DioException) {
                             // Check if the error has a response with a message
                             if (error.response?.data != null &&
                                 error.response?.data is Map) {

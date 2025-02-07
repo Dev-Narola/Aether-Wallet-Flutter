@@ -13,6 +13,8 @@ import 'package:aether_wallet/models/signin_request.dart';
 import 'package:aether_wallet/models/signin_response.dart';
 import 'package:aether_wallet/models/transaction_request.dart';
 import 'package:aether_wallet/models/transactions_response.dart';
+import 'package:aether_wallet/models/update_report_request.dart';
+import 'package:aether_wallet/models/update_user_request.dart';
 import 'package:aether_wallet/models/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -21,7 +23,7 @@ import '../models/api_response.dart';
 
 part 'rest_client.g.dart';
 
-const String baseUrl = "http://192.168.94.199:5000/";
+const String baseUrl = "http://192.168.110.199:5000/";
 
 // dart pub run build_runner build
 
@@ -119,5 +121,23 @@ abstract class RestClient {
   Future<CommonResponse> deleteContact(
     @Header("Authorization") String token,
     @Path("contact_id") String contactId,
+  );
+
+  @PUT("auth/update")
+  Future<CommonResponse> updateUser(
+    @Header("Authorization") String token,
+    @Body() UpdateUserRequest updateRequest,
+  );
+
+  @DELETE("report/report/delete")
+  Future<CommonResponse> deleteReport(
+    @Header("Authorization") String token,
+    @Header("Report-ID") String id,
+  );
+
+  @PUT("report/report/update")
+  Future<CommonResponse> updatereport(
+    @Header("Authorization") String token,
+    @Body() UpdateReportRequest body,
   );
 }
